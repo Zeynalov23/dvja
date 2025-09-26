@@ -20,7 +20,7 @@ pipeline {
       steps { sh "mvn ${env.MVN_FLAGS} clean verify" }
       post { always { junit 'target/surefire-reports/*.xml'; publishHTML(target: [reportDir: 'target/site/jacoco', reportFiles: 'index.html', reportName: 'JaCoCo']) } }
     }
-    
+    */
     stage('Static / Dependency Scans (parallel)') {
       parallel {
         stage('SpotBugs (scripted)') {
@@ -32,7 +32,7 @@ pipeline {
         // If you have Teamscale/IQ: add CLI stages here to upload reports or evaluate policies.
       }
     }
-    */
+    
 
     stage('Package & Publish to Nexus (SNAPSHOT)') {
       when {
