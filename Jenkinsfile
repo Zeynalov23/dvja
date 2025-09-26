@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  tools {
+    maven 
+  }
   options { timestamps() }
   parameters {
     choice(name: 'ENV', choices: ['dev','test'], description: 'Target env')
