@@ -32,7 +32,11 @@ pipeline {
     */
 
     stage('Package & Publish to Nexus (SNAPSHOT)') {
-      when { expression { return !currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause)?.getUserId()?.contains('release') } }
+      when {
+        not {
+          branch 'release/*'
+        }
+      }
       steps { sh "mvn ${env.MVN_FLAGS} -DskipTests deploy -s .jenkins/settings.xml" }
     }
   }
