@@ -40,7 +40,13 @@ pipeline {
           branch 'release/*'
         }
       }
-      steps { sh "mvn ${env.MVN_FLAGS} -DskipTests deploy -s .jenkins/settings.xml" }
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'nexus-credentials', 
+                                          usernameVariable: 'NEXUS_USER', 
+                                          passwordVariable: 'NEXUS_PASSWORD')]) {
+          sh "mvn ${env.MVN_FLAGS} -DskipTests deploy -s .jenkins/settings.xml"
+        }
+      }
     }
   }
 }
