@@ -1,9 +1,7 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.9.6-eclipse-temurin-17'
-      args '-v $HOME/.m2:/root/.m2'
-    }
+  agent any
+  tools {
+    maven 'maven'   // must match the name you gave in Jenkins UI
   }
   options { timestamps() }
   parameters {
