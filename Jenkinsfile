@@ -11,5 +11,10 @@ pipeline {
   }
   stages {
     stage('Checkout') { steps { checkout scm } }
+    stage('Build & Unit Tests') {
+      steps { sh "mvn ${env.MVN_FLAGS} clean verify" }
+      post { always { junit 'target/surefire-reports/*.xml'; publishHTML(target: [reportDir: 'target/site/jacoco', reportFiles: 'index.html', reportName: 'JaCoCo']) } }
+    }
   }
+  
 }
